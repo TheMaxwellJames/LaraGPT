@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LaraGptIndexController;
+use App\Http\Controllers\LaraGPTStoreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/chat/{id?}', LaraGptIndexController::class)->name('chat.show');
+    Route::post('/chat/{id?}', LaraGPTStoreController::class)->name('chat.store');
 });
 
 require __DIR__.'/auth.php';

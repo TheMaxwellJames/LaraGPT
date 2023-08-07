@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
 use Inertia\Inertia;
-use Inertia\Response as InertiaResponse;
 use Inertia\Response;
-
+use Illuminate\Support\Facades\Auth;
+use Inertia\Response as InertiaResponse;
 //use Illuminate\Http\Request;
 
 class LaraGptIndexController extends Controller
@@ -14,6 +15,9 @@ class LaraGptIndexController extends Controller
 
     public function __invoke(string $id = null): Response
     {
-        return Inertia::render('Chat/ChatIndex');
+        return Inertia::render('Chat/ChatIndex', [
+            'chat' => fn () => $id ? Chat::findOrFail($id) : null,
+            'messages' => Chat::latest()->where('user_id', Auth::id())->get()
+        ]);
     }
 }
